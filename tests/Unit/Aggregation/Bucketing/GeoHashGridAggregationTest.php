@@ -21,6 +21,29 @@ use OpenSearchDSL\Aggregation\Bucketing\GeoHashGridAggregation;
 class GeoHashGridAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Tests getArray method.
+     *
+     * @param array $filterData
+     * @param array $expected
+     *
+     * @dataProvider getArrayDataProvider
+     */
+    public function testGeoHashGridAggregationGetArray($filterData, $expected): void
+    {
+        $aggregation = new GeoHashGridAggregation('foo', 'field');
+        static::assertSame('foo', $aggregation->getName());
+        static::assertSame('field', $aggregation->getField());
+        $aggregation->setPrecision($filterData['precision']);
+        $aggregation->setSize($filterData['size']);
+        $aggregation->setShardSize($filterData['shard_size']);
+        $aggregation->setField($filterData['field']);
+
+        $result = $aggregation->getArray();
+        static::assertEquals($result, $expected);
+        static::assertSame('location', $aggregation->getField());
+    }
+
+    /**
      * Data provider for testGeoHashGridAggregationGetArray().
      *
      * @return array
@@ -46,29 +69,6 @@ class GeoHashGridAggregationTest extends \PHPUnit\Framework\TestCase
         $out[] = [$filterData, $expectedResults];
 
         return $out;
-    }
-
-    /**
-     * Tests getArray method.
-     *
-     * @param array $filterData
-     * @param array $expected
-     *
-     * @dataProvider getArrayDataProvider
-     */
-    public function testGeoHashGridAggregationGetArray($filterData, $expected): void
-    {
-        $aggregation = new GeoHashGridAggregation('foo', 'field');
-        static::assertSame('foo', $aggregation->getName());
-        static::assertSame('field', $aggregation->getField());
-        $aggregation->setPrecision($filterData['precision']);
-        $aggregation->setSize($filterData['size']);
-        $aggregation->setShardSize($filterData['shard_size']);
-        $aggregation->setField($filterData['field']);
-
-        $result = $aggregation->getArray();
-        static::assertEquals($result, $expected);
-        static::assertSame('location', $aggregation->getField());
     }
 
     /**

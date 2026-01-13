@@ -19,6 +19,22 @@ use OpenSearchDSL\Aggregation\Bucketing\GlobalAggregation;
 class GlobalAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Test for global aggregation toArray() method.
+     *
+     * @param GlobalAggregation $aggregation
+     * @param array $expectedResult
+     *
+     * @dataProvider getToArrayData
+     */
+    public function testToArray($aggregation, $expectedResult): void
+    {
+        static::assertEquals(
+            json_encode($expectedResult, \JSON_THROW_ON_ERROR),
+            json_encode($aggregation->toArray(), \JSON_THROW_ON_ERROR)
+        );
+    }
+
+    /**
      * Data provider for testToArray().
      *
      * @return array
@@ -57,22 +73,6 @@ class GlobalAggregationTest extends \PHPUnit\Framework\TestCase
         ];
 
         return $out;
-    }
-
-    /**
-     * Test for global aggregation toArray() method.
-     *
-     * @param GlobalAggregation $aggregation
-     * @param array $expectedResult
-     *
-     * @dataProvider getToArrayData
-     */
-    public function testToArray($aggregation, $expectedResult): void
-    {
-        static::assertEquals(
-            json_encode($expectedResult, \JSON_THROW_ON_ERROR),
-            json_encode($aggregation->toArray(), \JSON_THROW_ON_ERROR)
-        );
     }
 
     /**

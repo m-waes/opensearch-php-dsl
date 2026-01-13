@@ -19,6 +19,22 @@ use OpenSearchDSL\Query\Specialized\ScriptQuery;
 class ScriptQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Test for toArray().
+     *
+     * @param string $script Script
+     * @param array $parameters Optional parameters
+     * @param array $expected Expected values
+     *
+     * @dataProvider getArrayDataProvider
+     */
+    public function testToArray($script, $parameters, $expected): void
+    {
+        $filter = new ScriptQuery($script, $parameters);
+        $result = $filter->toArray();
+        static::assertEquals(['script' => $expected], $result);
+    }
+
+    /**
      * Data provider for testToArray().
      *
      * @return array
@@ -37,21 +53,5 @@ class ScriptQueryTest extends \PHPUnit\Framework\TestCase
                 ['script' => ['inline' => "doc['num1'].value > param1", 'params' => ['param1' => 5]]],
             ],
         ];
-    }
-
-    /**
-     * Test for toArray().
-     *
-     * @param string $script Script
-     * @param array $parameters Optional parameters
-     * @param array $expected Expected values
-     *
-     * @dataProvider getArrayDataProvider
-     */
-    public function testToArray($script, $parameters, $expected): void
-    {
-        $filter = new ScriptQuery($script, $parameters);
-        $result = $filter->toArray();
-        static::assertEquals(['script' => $expected], $result);
     }
 }

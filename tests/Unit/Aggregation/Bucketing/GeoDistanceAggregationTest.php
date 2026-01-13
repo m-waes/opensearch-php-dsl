@@ -19,6 +19,32 @@ use OpenSearchDSL\Aggregation\Bucketing\GeoDistanceAggregation;
 class GeoDistanceAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Tests getArray method.
+     *
+     * @param array $filterData
+     * @param array $expected
+     *
+     * @dataProvider getGeoDistanceAggregationGetArrayDataProvider
+     */
+    public function testGeoDistanceAggregationGetArray($filterData, $expected): void
+    {
+        $aggregation = new GeoDistanceAggregation('foo', '', '');
+        $aggregation->setOrigin($filterData['origin']);
+        $aggregation->setField($filterData['field']);
+        $aggregation->setUnit($filterData['unit']);
+        $aggregation->setDistanceType($filterData['distance_type']);
+        $aggregation->addRange($filterData['ranges'][0], $filterData['ranges'][1]);
+
+        $result = $aggregation->getArray();
+        static::assertEquals($result, $expected);
+        static::assertSame('foo', $aggregation->getName());
+        static::assertSame($filterData['field'], $aggregation->getField());
+        static::assertSame($filterData['origin'], $aggregation->getOrigin());
+        static::assertSame($filterData['unit'], $aggregation->getUnit());
+        static::assertSame($filterData['distance_type'], $aggregation->getDistanceType());
+    }
+
+    /**
      * Data provider for testGeoDistanceAggregationGetArray().
      *
      * @return array
@@ -45,32 +71,6 @@ class GeoDistanceAggregationTest extends \PHPUnit\Framework\TestCase
         $out[] = [$filterData, $expectedResults];
 
         return $out;
-    }
-
-    /**
-     * Tests getArray method.
-     *
-     * @param array $filterData
-     * @param array $expected
-     *
-     * @dataProvider getGeoDistanceAggregationGetArrayDataProvider
-     */
-    public function testGeoDistanceAggregationGetArray($filterData, $expected): void
-    {
-        $aggregation = new GeoDistanceAggregation('foo', '', '');
-        $aggregation->setOrigin($filterData['origin']);
-        $aggregation->setField($filterData['field']);
-        $aggregation->setUnit($filterData['unit']);
-        $aggregation->setDistanceType($filterData['distance_type']);
-        $aggregation->addRange($filterData['ranges'][0], $filterData['ranges'][1]);
-
-        $result = $aggregation->getArray();
-        static::assertEquals($result, $expected);
-        static::assertSame('foo', $aggregation->getName());
-        static::assertSame($filterData['field'], $aggregation->getField());
-        static::assertSame($filterData['origin'], $aggregation->getOrigin());
-        static::assertSame($filterData['unit'], $aggregation->getUnit());
-        static::assertSame($filterData['distance_type'], $aggregation->getDistanceType());
     }
 
     /**

@@ -27,9 +27,9 @@ class CollapseTest extends \PHPUnit\Framework\TestCase
         $collapse = new Collapse('field_name');
         $collapse->addParameter('inner_hits', [
             [
-            'name' => 'cheapest_field_name',
-            'size' => 1,
-            'sort' => ['price'],
+                'name' => 'cheapest_field_name',
+                'size' => 1,
+                'sort' => ['price'],
             ],
         ]);
         $result = $collapse->hasParameter('inner_hits');
