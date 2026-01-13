@@ -78,38 +78,6 @@ class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
         $aggregation->toArray();
     }
 
-    public function getDateRangeAggregationConstructorProvider(): array
-    {
-        return [
-            // Case #0. Minimum arguments.
-            [],
-            // Case #1. Provide field.
-            ['field' => 'fieldName'],
-            // Case #2. Provide format.
-            ['field' => 'fieldName', 'format' => 'formatString'],
-            // Case #3. Provide empty ranges.
-            ['field' => 'fieldName', 'format' => 'formatString', 'ranges' => []],
-            // Case #4. Provide 1 range.
-            [
-                'field' => 'fieldName',
-                'format' => 'formatString',
-                'ranges' => [['from' => 'value']],
-            ],
-            // Case #4. Provide 2 ranges.
-            [
-                'field' => 'fieldName',
-                'format' => 'formatString',
-                'ranges' => [['from' => 'value'], ['to' => 'value']],
-            ],
-            // Case #5. Provide 3 ranges.
-            [
-                'field' => 'fieldName',
-                'format' => 'formatString',
-                'ranges' => [['from' => 'value'], ['to' => 'value'], ['from' => 'value', 'to' => 'value2']],
-            ],
-        ];
-    }
-
     /**
      * Tests constructor method.
      *
@@ -142,5 +110,37 @@ class DateRangeAggregationTest extends \PHPUnit\Framework\TestCase
         } else {
             $aggregation->__construct('mock', '');
         }
+    }
+
+    public function getDateRangeAggregationConstructorProvider(): array
+    {
+        return [
+            // Case #0. Minimum arguments.
+            [],
+            // Case #1. Provide field.
+            ['field' => 'fieldName'],
+            // Case #2. Provide format.
+            ['field' => 'fieldName', 'format' => 'formatString'],
+            // Case #3. Provide empty ranges.
+            ['field' => 'fieldName', 'format' => 'formatString', 'ranges' => []],
+            // Case #4. Provide 1 range.
+            [
+                'field' => 'fieldName',
+                'format' => 'formatString',
+                'ranges' => [['from' => 'value']],
+            ],
+            // Case #4. Provide 2 ranges.
+            [
+                'field' => 'fieldName',
+                'format' => 'formatString',
+                'ranges' => [['from' => 'value'], ['to' => 'value']],
+            ],
+            // Case #5. Provide 3 ranges.
+            [
+                'field' => 'fieldName',
+                'format' => 'formatString',
+                'ranges' => [['from' => 'value'], ['to' => 'value'], ['from' => 'value', 'to' => 'value2']],
+            ],
+        ];
     }
 }

@@ -20,6 +20,25 @@ use OpenSearchDSL\Query\TermLevel\TermsQuery;
 class NestedQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Test for query toArray() method.
+     *
+     * @param string $path
+     * @param array $parameters
+     * @param array $expected
+     *
+     * @dataProvider getArrayDataProvider
+     */
+    public function testToArray($path, $parameters, $expected): void
+    {
+        $termsQuery = new TermsQuery('foo', ['bar']);
+        $query = new NestedQuery($path, $termsQuery, $parameters);
+        $result = $query->toArray();
+        static::assertSame($path, $query->getPath());
+        static::assertSame($termsQuery, $query->getQuery());
+        static::assertEquals(['nested' => $expected], $result);
+    }
+
+    /**
      * Data provider to testGetToArray.
      *
      * @return array
@@ -49,24 +68,5 @@ class NestedQueryTest extends \PHPUnit\Framework\TestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * Test for query toArray() method.
-     *
-     * @param string $path
-     * @param array $parameters
-     * @param array $expected
-     *
-     * @dataProvider getArrayDataProvider
-     */
-    public function testToArray($path, $parameters, $expected): void
-    {
-        $termsQuery = new TermsQuery('foo', ['bar']);
-        $query = new NestedQuery($path, $termsQuery, $parameters);
-        $result = $query->toArray();
-        static::assertSame($path, $query->getPath());
-        static::assertSame($termsQuery, $query->getQuery());
-        static::assertEquals(['nested' => $expected], $result);
     }
 }

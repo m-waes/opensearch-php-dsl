@@ -19,6 +19,23 @@ use OpenSearchDSL\Query\Geo\GeoPolygonQuery;
 class GeoPolygonQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Tests toArray method.
+     *
+     * @param string $field field name
+     * @param array $points polygon's points
+     * @param array $parameters optional parameters
+     * @param array $expected expected result
+     *
+     * @dataProvider getArrayDataProvider
+     */
+    public function testToArray($field, $points, $parameters, $expected): void
+    {
+        $filter = new GeoPolygonQuery($field, $points, $parameters);
+        $result = $filter->toArray();
+        static::assertEquals(['geo_polygon' => $expected], $result);
+    }
+
+    /**
      * Data provider to testToArray.
      *
      * @return array
@@ -70,22 +87,5 @@ class GeoPolygonQueryTest extends \PHPUnit\Framework\TestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * Tests toArray method.
-     *
-     * @param string $field field name
-     * @param array $points polygon's points
-     * @param array $parameters optional parameters
-     * @param array $expected expected result
-     *
-     * @dataProvider getArrayDataProvider
-     */
-    public function testToArray($field, $points, $parameters, $expected): void
-    {
-        $filter = new GeoPolygonQuery($field, $points, $parameters);
-        $result = $filter->toArray();
-        static::assertEquals(['geo_polygon' => $expected], $result);
     }
 }

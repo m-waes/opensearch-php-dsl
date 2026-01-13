@@ -20,6 +20,24 @@ use OpenSearchDSL\Type\Location;
 class GeoDistanceQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Tests toArray() method.
+     *
+     * @param string $field field name
+     * @param string $distance distance
+     * @param array $location location
+     * @param array $parameters optional parameters
+     * @param array $expected expected result
+     *
+     * @dataProvider getArrayDataProvider
+     */
+    public function testToArray($field, $distance, $location, $parameters, $expected): void
+    {
+        $query = new GeoDistanceQuery($field, $distance, new Location($location['lat'], $location['lon']), $parameters);
+        $result = $query->toArray();
+        static::assertEquals(['geo_distance' => $expected], $result);
+    }
+
+    /**
      * Data provider for testToArray().
      *
      * @return array
@@ -44,23 +62,5 @@ class GeoDistanceQueryTest extends \PHPUnit\Framework\TestCase
                 ['distance' => '20km', 'location' => ['lat' => 0, 'lon' => 0], 'parameter' => 'value'],
             ],
         ];
-    }
-
-    /**
-     * Tests toArray() method.
-     *
-     * @param string $field field name
-     * @param string $distance distance
-     * @param array $location location
-     * @param array $parameters optional parameters
-     * @param array $expected expected result
-     *
-     * @dataProvider getArrayDataProvider
-     */
-    public function testToArray($field, $distance, $location, $parameters, $expected): void
-    {
-        $query = new GeoDistanceQuery($field, $distance, new Location($location['lat'], $location['lon']), $parameters);
-        $result = $query->toArray();
-        static::assertEquals(['geo_distance' => $expected], $result);
     }
 }

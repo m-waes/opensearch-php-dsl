@@ -39,6 +39,14 @@ class SuggestTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @dataProvider getTestToArrayData()
+     */
+    public function testToArray(Suggest $suggest, array $expected): void
+    {
+        static::assertEquals($expected, $suggest->toArray());
+    }
+
+    /**
      * Data provider for testToArray()
      */
     public function getTestToArrayData()
@@ -120,13 +128,5 @@ class SuggestTest extends \PHPUnit\Framework\TestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * @dataProvider getTestToArrayData()
-     */
-    public function testToArray(Suggest $suggest, array $expected): void
-    {
-        static::assertEquals($expected, $suggest->toArray());
     }
 }

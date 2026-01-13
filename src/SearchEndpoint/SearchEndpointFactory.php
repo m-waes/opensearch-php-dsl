@@ -27,6 +27,7 @@ class SearchEndpointFactory
         'aggregations' => AggregationsEndpoint::class,
         'suggest' => SuggestEndpoint::class,
         'inner_hits' => InnerHitsEndpoint::class,
+        'collapse' => CollapseEndpoint::class,
     ];
 
     /**

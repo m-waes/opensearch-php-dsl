@@ -24,6 +24,19 @@ use OpenSearchDSL\Query\TermLevel\TermQuery;
 class FilterAggregationTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Test for filter aggregation toArray() method.
+     *
+     * @param FilterAggregation $aggregation
+     * @param array $expectedResult
+     *
+     * @dataProvider getToArrayData
+     */
+    public function testToArray($aggregation, $expectedResult): void
+    {
+        static::assertEquals($expectedResult, $aggregation->toArray());
+    }
+
+    /**
      * Data provider for testToArray.
      *
      * @return array
@@ -86,19 +99,6 @@ class FilterAggregationTest extends \PHPUnit\Framework\TestCase
         ];
 
         return $out;
-    }
-
-    /**
-     * Test for filter aggregation toArray() method.
-     *
-     * @param FilterAggregation $aggregation
-     * @param array $expectedResult
-     *
-     * @dataProvider getToArrayData
-     */
-    public function testToArray($aggregation, $expectedResult): void
-    {
-        static::assertEquals($expectedResult, $aggregation->toArray());
     }
 
     /**

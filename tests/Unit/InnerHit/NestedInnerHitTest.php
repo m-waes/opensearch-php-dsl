@@ -13,6 +13,19 @@ use OpenSearchDSL\Search;
 class NestedInnerHitTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Tests toArray() method.
+     *
+     * @param NestedInnerHit $innerHit
+     * @param array $expected
+     *
+     * @dataProvider getTestToArrayData
+     */
+    public function testToArray($innerHit, $expected): void
+    {
+        static::assertEquals($expected, $innerHit->toArray());
+    }
+
+    /**
      * Data provider for testToArray().
      *
      * @return array
@@ -85,19 +98,6 @@ class NestedInnerHitTest extends \PHPUnit\Framework\TestCase
         ];
 
         return $out;
-    }
-
-    /**
-     * Tests toArray() method.
-     *
-     * @param NestedInnerHit $innerHit
-     * @param array $expected
-     *
-     * @dataProvider getTestToArrayData
-     */
-    public function testToArray($innerHit, $expected): void
-    {
-        static::assertEquals($expected, $innerHit->toArray());
     }
 
     /**

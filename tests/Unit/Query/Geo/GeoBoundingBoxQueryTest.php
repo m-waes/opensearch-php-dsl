@@ -29,6 +29,23 @@ class GeoBoundingBoxQueryTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * Tests toArray method.
+     *
+     * @param string $field field name
+     * @param array $values bounding box values
+     * @param array $parameters optional parameters
+     * @param array $expected expected result
+     *
+     * @dataProvider getArrayDataProvider
+     */
+    public function testToArray($field, $values, $parameters, $expected): void
+    {
+        $query = new GeoBoundingBoxQuery($field, $values, $parameters);
+        $result = $query->toArray();
+        static::assertEquals(['geo_bounding_box' => $expected], $result);
+    }
+
+    /**
      * Data provider for testToArray().
      *
      * @return array
@@ -105,22 +122,5 @@ class GeoBoundingBoxQueryTest extends \PHPUnit\Framework\TestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * Tests toArray method.
-     *
-     * @param string $field field name
-     * @param array $values bounding box values
-     * @param array $parameters optional parameters
-     * @param array $expected expected result
-     *
-     * @dataProvider getArrayDataProvider
-     */
-    public function testToArray($field, $values, $parameters, $expected): void
-    {
-        $query = new GeoBoundingBoxQuery($field, $values, $parameters);
-        $result = $query->toArray();
-        static::assertEquals(['geo_bounding_box' => $expected], $result);
     }
 }

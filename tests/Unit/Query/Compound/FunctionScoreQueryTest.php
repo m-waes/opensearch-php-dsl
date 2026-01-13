@@ -24,6 +24,21 @@ use OpenSearchDSL\Search;
 class FunctionScoreQueryTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * Tests addRandomFunction method.
+     *
+     * @param array $expectedArray
+     *
+     * @dataProvider addRandomFunctionProvider
+     */
+    public function testAddRandomFunction($seed, $expectedArray): void
+    {
+        $functionScoreQuery = new FunctionScoreQuery(new MatchAllQuery());
+        $functionScoreQuery->addRandomFunction($seed);
+
+        static::assertEquals(['function_score' => $expectedArray], $functionScoreQuery->toArray());
+    }
+
+    /**
      * Data provider for testAddRandomFunction.
      *
      * @return array
@@ -60,21 +75,6 @@ class FunctionScoreQueryTest extends \PHPUnit\Framework\TestCase
                 ],
             ],
         ];
-    }
-
-    /**
-     * Tests addRandomFunction method.
-     *
-     * @param array $expectedArray
-     *
-     * @dataProvider addRandomFunctionProvider
-     */
-    public function testAddRandomFunction($seed, $expectedArray): void
-    {
-        $functionScoreQuery = new FunctionScoreQuery(new MatchAllQuery());
-        $functionScoreQuery->addRandomFunction($seed);
-
-        static::assertEquals(['function_score' => $expectedArray], $functionScoreQuery->toArray());
     }
 
     /**
